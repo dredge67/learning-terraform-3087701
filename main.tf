@@ -90,12 +90,13 @@ module "blog_alb" {
       backend_protocol = "HTTP"
       backend_port     = 80
       target_type      = "instance"
-      targets = {
-        my_target = {
-          target_id = aws_instance.blog.id
-          port = 80
-        }
-      }
+      # Remove targets since specified in autoscaling module
+      # targets = {
+      #   my_target = {
+      #     target_id = aws_instance.blog.id
+      #     port = 80
+      #   }
+      # }
     }
   ]
 
