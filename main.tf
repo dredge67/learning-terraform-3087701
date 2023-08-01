@@ -38,6 +38,7 @@ module "vpc" {
 resource "aws_instance" "blog" {
   ami           = data.aws_ami.app_ami.id
   instance_type = var.instance_type
+  subnet_id     = module.vpc.public_subnets[0]
 
   vpc_security_group_ids = [module.blog_sg.security_group_id]
 
@@ -62,12 +63,12 @@ module "blog_sg" {
   egress_cidr_blocks  = ["0.0.0.0/0"]
 }
 
-resource "aws_security_group" "blog" {
-  name        = "blog"
-  description = "Allow http and https in; allow everything out."
+# resource "aws_security_group" "blog" {
+#   name        = "blog"
+#   description = "Allow http and https in; allow everything out."
 
-  vpc_id = data.aws_vpc.default.id
-}
+#   vpc_id = data.aws_vpc.default.id
+# }
 
 # After switch to module and predefined rules, these no longer necessary
 # resource "aws_security_group_rule" "blog_http_in" {
